@@ -4,12 +4,17 @@ import './App.css';
 import './static/css/chat_interface.css';
 import './static/css/temporary.css';
 
-const html = React.createElement;
 
+var ID = function(){
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
+
+const html = React.createElement;
 const textToHtml = (input) => {
   const text = input.replace('&#x27;', '\'');
   if (text && (text.indexOf('\n') !== -1 || text.indexOf('\\n') !== -1)) {
     return (
+      
       html('div', {}, text.split(/\n|\\n/).map((paragraph, i) => {
         return (
           html('p', { key: i }, formatParagraph(paragraph)));
@@ -32,6 +37,7 @@ const matchAll = (input) => {
   const talic = matchElement(input, 'i', /\*([ a-z0-9!?.,'`_]+)\*/gmi);
   const underLine = matchElement(input, 'u', /_\*([ a-z0-9!?.,*'`_]+)\*_/gmi);
   const code = matchElement(input, 'code', /`([ a-z0-9!?.,*'_]+)`/gmi);
+  
   return [bold, talic, underLine, code].filter(e => { return e != null; });
 };
 
@@ -172,7 +178,7 @@ class MessagesContainer extends Component{
 class ChatApp extends Component {
   constructor(props){
     super(props);
-    this.state = {"messages": [], "current_message":""}
+    this.state = {"sessionID": ID(), "messages": [], "current_message":""}
     this.handleClick = this.handleClick.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -181,6 +187,8 @@ class ChatApp extends Component {
 
   addFirstMessage(enter=false){
     let messages = this.state.messages;
+    let session = this.state.sessionID;
+
     if(messages.length===0){
       fetch("http://34.148.112.183:8080/greeting",{
         crossDomain:true,
@@ -188,6 +196,9 @@ class ChatApp extends Component {
         headers: { 
           'Content-Type': 'application/json'
         },
+        body : JSON.stringify({
+          "sessionID": session,
+        })
       })
       .then(res => res.json())
       .then(
@@ -206,6 +217,7 @@ class ChatApp extends Component {
   addMessageBox(enter=true){
     let messages = this.state.messages;
     let current_message = this.state.current_message;
+    let session = this.state.sessionID;
     // console.log(this.state);
 
     if(current_message && enter){
@@ -216,7 +228,9 @@ class ChatApp extends Component {
         headers: { 
           'Content-Type': 'application/json'
         },
-        body : JSON.stringify({"message": current_message})
+        body : JSON.stringify({
+          "sessionID": session,
+          "message": current_message})
       })
       .then(res => res.json())
       .then(
