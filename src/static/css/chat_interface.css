@@ -4,14 +4,16 @@
 
 body {
   background-color: #edeff2;
-  font-family: "Calibri", "Roboto", sans-serif;
+  font-family: "Roboto", "Calibri",  sans-serif;
 }
 
 .chat_window {
   /*position: absolute;*/
-  width: calc(100% - 20px);
-  max-width: 800px;
-  height: 500px;
+  /* width: calc(100% - 20px); */
+  width: 100%;
+  /* max-width: 100%; */
+  /* 800px; */
+  /* height: 500px; */
   border-radius: 10px;
   background-color: #fff;
   top: 50%;
@@ -19,7 +21,8 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   background-color: #f8f8f8;
   overflow: hidden;
-  height: calc(100vh - 120px);
+  height: calc(100% - 120px);
+  max-height: 100%;
 }
 
 .top_menu {
@@ -67,11 +70,20 @@ body {
   white-space: pre-line;
 }
 
-code {
-  background-color: #eee;
+.messages .message.left code  {
+  background-color: #ffb266;
+  color: white;
   border: 1px hidden #999;
   padding-right: 5px;
 }
+
+.messages .message.right code  {
+  background-color: #3399ff;
+  color: white;
+  border: 1px hidden #999;
+  padding-right: 5px;
+}
+
 .messages .message {
   clear: both;
   overflow: hidden;
@@ -107,11 +119,11 @@ code {
   left: 100%;
   border-left-color: #c7eafc;
 }
-.messages .message.right .text {
-  color: #45829b;
-}
+/* .messages .message.right .text {
+  color: black;
+} */
 
-.messages .message.left .text {
+.messages .message.left, .messages .message.right .text {
     color: black;
     font-weight: inherit;
 }
