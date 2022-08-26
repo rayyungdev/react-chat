@@ -4,6 +4,50 @@ import './App.css';
 import './static/css/chat_interface.css';
 import './static/css/temporary.css';
 
+const html = React.createElement;
+
+const textToHtml = (input) => {
+  const text = input.replace('&#x27;', '\'');
+  if (text && (text.indexOf('\n') !== -1 || text.indexOf('\\n') !== -1)) {
+    return (
+      html('div', {}, text.split(/\n|\\n/).map((paragraph, i) => {
+        return (
+          html('p', { key: i }, formatParagraph(paragraph)));
+      })));
+  } else {
+    return (
+      html('p', {}, formatParagraph(text)));
+  }
+};
+
+
+const matchElement = (input, element, regex) => {
+  const match = regex.exec(input);
+  if (match) match['element'] = element;
+  return match;
+};
+
+const matchAll = (input) => {
+  const bold = matchElement(input, 'b', /\*\*([ a-z0-9!?.,*'`_]+)\*\*/gmi);
+  const talic = matchElement(input, 'i', /\*([ a-z0-9!?.,'`_]+)\*/gmi);
+  const underLine = matchElement(input, 'u', /_\*([ a-z0-9!?.,*'`_]+)\*_/gmi);
+  const code = matchElement(input, 'code', /`([ a-z0-9!?.,*'_]+)`/gmi);
+  return [bold, talic, underLine, code].filter(e => { return e != null; });
+};
+
+const formatParagraph = (unformatted, formatted) => {
+  const matches = matchAll(unformatted);
+  if (matches.length > 0) {
+    const targetMatch = matches.sort((a, b) => { return a['index'] - b['index']; })[0];
+    const remaining = unformatted.substring(targetMatch['index'] + targetMatch[0].length, unformatted.length);
+    const newElement = html(targetMatch['element'], { key: targetMatch.index }, formatParagraph(targetMatch[1]));
+    const processed = [formatted, [unformatted.substring(0, targetMatch.index), newElement]];
+    return formatParagraph(remaining, processed);
+  } else {
+    return formatted ? [formatted, unformatted] : unformatted;
+  }
+};
+
 class SendButton extends Component{
     render(){
       return (<div className="send_message" onClick={this.props.handleClick}>
@@ -13,6 +57,7 @@ class SendButton extends Component{
 }
 
 class MessageTextBoxContainer extends Component{
+  
   render(){
     return(
       <div className="message_input_wrapper">
@@ -30,33 +75,35 @@ class Avartar extends Component {
   }
 }
 
-class BotMessageBox extends Component{
-  constructor(props) {
-    super(props);
-  }
-  render(){
-    return(
-      <li className="message left appeared">
-        <Avartar></Avartar>
-        <div className="text_wrapper">
-            <div className="text">{this.props.message}</div>
-        </div>
-      </li>
-    );
-  }
-}
+// class BotMessageBox extends Component{
+//   // constructor(props) {
+//   //   super(props);
+//   // }
+//   render(){
+//     return(
+//       <li className="message left appeared">
+//         <Avartar></Avartar>
+//         <div className="text_wrapper">
+//             <div className="text">{this.props.message}</div>
+//         </div>
+//       </li>
+//     );
+//   }
+// }
 
 class UserMessageBox extends Component{
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-  }
+  // }
   render(){
+    const converted_text = textToHtml(this.props.message);
+
     return(
       <li className={`message ${this.props.appearance} appeared`}>
         <Avartar></Avartar>
         <div className="text_wrapper">
-            <div className="text">{this.props.message}</div>
+            <div className="text">{converted_text}</div>
         </div>
       </li>
     );
@@ -83,7 +130,29 @@ class MessagesContainer extends Component{
   }
 
   createBotMessages(){
-    console.log(this.props.messages);
+    let messages = this.props.messages;
+    if (this.props.messages.length === 0 )
+    {
+      fetch("http://34.148.112.183:8080/greeting",{
+        crossDomain:true,
+        method : "post",
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          // console.log(result)
+          this.setState({
+            messages: [...messages, {"message":result["message"], "isbotmessage":true}]
+          });
+        },
+        (error) => {
+          //do nothing for now
+        }
+      );
+    }
     return this.props.messages.map((message, index) =>
        <UserMessageBox key={index} message={message["message"]} appearance={message["isbotmessage"] ? "left": "right"}/>
     );
@@ -109,19 +178,50 @@ class ChatApp extends Component {
     this.onChange = this.onChange.bind(this);
     this.addMessageBox = this.addMessageBox.bind(this);
   }
-  
+
+  addFirstMessage(enter=false){
+    let messages = this.state.messages;
+    if(messages.length===0){
+      fetch("http://34.148.112.183:8080/greeting",{
+        crossDomain:true,
+        method : "post",
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(res => res.json())
+      .then(
+        (result) => {
+          // console.log(result)
+          this.setState({
+            messages: [...messages, {"message":result["message"], "isbotmessage":true}]
+          });
+        },
+        (error) => {
+          //do nothing for now
+        }
+      );}
+  }
 
   addMessageBox(enter=true){
     let messages = this.state.messages;
     let current_message = this.state.current_message;
-    console.log(this.state);
+    // console.log(this.state);
+
     if(current_message && enter){
       messages = [...messages, {"message":current_message}];
-      fetch("http://localhost:5000?message=" + current_message)
+      fetch("http://34.148.112.183:8080/response",{
+        crossDomain:true,
+        method : "post",
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({"message": current_message})
+      })
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result);
+          // console.log(result)
           this.setState({
             messages: [...messages, {"message":result["message"], "isbotmessage":true}]
           });
@@ -138,7 +238,9 @@ class ChatApp extends Component {
     });
 
   }
-
+  componentDidMount(){
+    this.addFirstMessage();
+  }
   handleClick(){
     this.addMessageBox();
   }
@@ -146,7 +248,7 @@ class ChatApp extends Component {
   onChange(e) {
     this.setState({
       current_message: e.target.value
-    });  
+    }); 
   }
 
     _handleKeyPress(e) {
@@ -168,7 +270,6 @@ class ChatApp extends Component {
             message={this.state.current_message}></MessageTextBoxContainer>
           <SendButton handleClick={this.handleClick}></SendButton>
         </div>
-        
       </div>
     );
   }

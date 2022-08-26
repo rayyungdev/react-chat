@@ -62,6 +62,15 @@ body {
   margin: 0;
   height: calc(100vh - 250px);
   overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: pre-line;
+}
+
+code {
+  background-color: #eee;
+  border: 1px hidden #999;
+  padding-right: 5px;
 }
 .messages .message {
   clear: both;
@@ -175,7 +184,7 @@ body {
 .bottom_wrapper .send_message {
   width: 140px;
   height: 50px;
-  display: inline-block;
+  /* display: inline-block; */
   border-radius: 50px;
   background-color: #a3d063;
   border: 2px solid #a3d063;
