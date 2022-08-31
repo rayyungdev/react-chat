@@ -130,6 +130,8 @@
 
 .messages .message.appeared {
   opacity: 1;
+  /* text-align: left; */
+  align-items: left;
 }
 .messages .message .avatar {
   width: 60px;
@@ -223,4 +225,5 @@
 
 #msg_input{
     color: black;
+    text-align: left;
 }
