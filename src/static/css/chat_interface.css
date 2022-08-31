@@ -130,8 +130,7 @@
 
 .messages .message.appeared {
   opacity: 1;
-  /* text-align: left; */
-  align-items: left;
+  text-align: left !important;
 }
 .messages .message .avatar {
   width: 60px;
