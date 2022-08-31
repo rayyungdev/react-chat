@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import './static/css/chat_interface.css';
 import './static/css/temporary.css';
-
 
 var ID = function(){
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -14,7 +12,6 @@ const textToHtml = (input) => {
   const text = input.replace('&#x27;', '\'');
   if (text && (text.indexOf('\n') !== -1 || text.indexOf('\\n') !== -1)) {
     return (
-      
       html('div', {}, text.split(/\n|\\n/).map((paragraph, i) => {
         return (
           html('p', { key: i }, formatParagraph(paragraph)));
@@ -36,8 +33,7 @@ const matchAll = (input) => {
   const bold = matchElement(input, 'b', /\*\*([ a-z0-9!?.,*'`_]+)\*\*/gmi);
   const talic = matchElement(input, 'i', /\*([ a-z0-9!?.,'`_]+)\*/gmi);
   const underLine = matchElement(input, 'u', /_\*([ a-z0-9!?.,*'`_]+)\*_/gmi);
-  const code = matchElement(input, 'code', /`([ a-z0-9!?.,*'_]+)`/gmi);
-  
+  const code = matchElement(input, 'code', /`([ a-z0-9!?.,*'_]+)`/gmi);  
   return [bold, talic, underLine, code].filter(e => { return e != null; });
 };
 
@@ -288,7 +284,5 @@ class ChatApp extends Component {
     );
   }
 }
-
-
 
 export default ChatApp;

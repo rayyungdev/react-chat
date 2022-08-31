@@ -2,10 +2,10 @@
   box-sizing: border-box;
 }
 
-body {
+/* body {
   background-color: #edeff2;
   font-family: "Roboto", "Calibri",  sans-serif;
-}
+} */
 
 .chat_window {
   /*position: absolute;*/

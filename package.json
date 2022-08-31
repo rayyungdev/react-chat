@@ -2,7 +2,9 @@
   "name": "react-chat-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
+    "parcel-bundler": "^1.12.5",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-scripts": "2.0.5"
@@ -10,6 +12,7 @@
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",
+    "build:widget": "parcel build src/index.js --no-source-maps -d proto",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

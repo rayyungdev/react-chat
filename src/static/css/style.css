@@ -525,9 +525,9 @@ ul.tabs > li:after{
     -moz-box-sizing: unset;
     box-sizing: unset; 
 }
-body{
+/* body{
   line-height: unset;
-}
+} */
 pre{
   padding: unset;
   border-radius:unset;
