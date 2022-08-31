@@ -180,7 +180,7 @@
   height: 50px;
   border-radius: 25px;
   border: 1px solid #bcbdc0;
-  width: calc(100% - 160px);
+  width: 88%;
   position: relative;
   padding: 0 20px;
 }
@@ -188,14 +188,14 @@
   border: none;
   height: 100%;
   box-sizing: border-box;
-  width: calc(100% - 40px);
+  /* width: calc(100% - 40px); */
   position: absolute;
   outline-width: 0;
   color: gray;
 }
 .bottom_wrapper .send_message {
-  width: 140px;
-  height: 50px;
+  width: 10%;
+  height: 100%;
   /* display: inline-block; */
   border-radius: 50px;
   background-color: #a3d063;
