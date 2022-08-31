@@ -21,8 +21,8 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   background-color: #f8f8f8;
   overflow: hidden;
-  height: calc(100% - 120px);
-  max-height: 100%;
+  /* height: calc(100% - 120px); */
+  max-height: inherit;
 }
 
 .top_menu {
