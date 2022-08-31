@@ -1,9 +1,9 @@
 .chat_window{
-	height: auto;
-    width: auto;
+	height: 100%;
 }
 .messages{
-	height: calc(100% - 150px);
+    max-height: 100%;
+	height: calc(100vh - 150px);
 }
 
 .messages .message.left .text {
