@@ -3,7 +3,7 @@
     width: auto;
 }
 .messages{
-	height: calc(100vh - 150px);
+	height: calc(100% - 150px);
 }
 
 .messages .message.left .text {

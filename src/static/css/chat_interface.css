@@ -63,7 +63,7 @@
   list-style: none;
   padding: 20px 10px 0 10px;
   margin: 0;
-  height: calc(100vh - 250px);
+  height: calc(100% - 250px);
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
