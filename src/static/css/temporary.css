@@ -1,5 +1,6 @@
 .chat_window{
 	height: 100%;
+    display: inline-table;
 }
 .messages{
 	height: calc(100vh - 150px);
