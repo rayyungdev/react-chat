@@ -184,10 +184,12 @@
   width: 88%;
   position: relative;
   padding: 0 20px;
+  text-align: left;
 }
 .bottom_wrapper .message_input_wrapper .message_input {
   border: none;
   height: 100%;
+  width: 97%;
   box-sizing: border-box;
   /* width: calc(100% - 40px); */
   position: absolute;
