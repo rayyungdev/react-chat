@@ -132,29 +132,34 @@ class MessagesContainer extends Component{
   }
 
   createBotMessages(){
-    let messages = this.props.messages;
-    if (this.props.messages.length === 0 )
-    {
-      fetch("http://34.148.112.183:8080/greeting",{
-        crossDomain:true,
-        method : "post",
-        headers: { 
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(res => res.json())
-      .then(
-        (result) => {
-          // console.log(result)
-          this.setState({
-            messages: [...messages, {"message":result["message"], "isbotmessage":true}]
-          });
-        },
-        (error) => {
-          //do nothing for now
-        }
-      );
-    }
+    // let messages = this.props.messages;
+    // let session = this.props.sessionID;
+
+    // if (this.props.messages.length === 0 )
+    // {
+    //   fetch("/api/greeting",{
+    //     crossDomain:true,
+    //     method : "post",
+    //     headers: { 
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body : JSON.stringify({
+    //       "sessionID": session,
+    //     })
+    //   })
+    //   .then(res => res.json())
+    //   .then(
+    //     (result) => {
+    //       // console.log(result)
+    //       this.setState({
+    //         messages: [...messages, {"message":result["message"], "isbotmessage":true}]
+    //       });
+    //     },
+    //     (error) => {
+    //       //do nothing for now
+    //     }
+    //   );
+    // }
     return this.props.messages.map((message, index) =>
        <UserMessageBox key={index} message={message["message"]} appearance={message["isbotmessage"] ? "left": "right"}/>
     );
@@ -186,7 +191,7 @@ class ChatApp extends Component {
     let session = this.state.sessionID;
 
     if(messages.length===0){
-      fetch("http://34.148.112.183:8080/greeting",{
+      fetch("/api/greeting",{
         crossDomain:true,
         method : "post",
         headers: { 
@@ -218,7 +223,7 @@ class ChatApp extends Component {
 
     if(current_message && enter){
       messages = [...messages, {"message":current_message}];
-      fetch("http://34.148.112.183:8080/response",{
+      fetch("/api/response",{
         crossDomain:true,
         method : "post",
         headers: { 
