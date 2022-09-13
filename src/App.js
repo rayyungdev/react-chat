@@ -241,7 +241,7 @@ class ChatApp extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-          // console.log(result)
+          console.log(result)
           this.setState({
             messages: [...messages, {"message":result["message"], "isbotmessage":true}]
           });
