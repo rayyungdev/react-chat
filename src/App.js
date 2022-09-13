@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import './App.css';
 import './static/css/chat_interface.css';
 import './static/css/temporary.css';
@@ -179,17 +179,17 @@ class MessagesContainer extends Component{
 class ChatApp extends Component {
   constructor(props){
     super(props);
-    this.state = {"sessionID": ID(), "messages": [], "current_message":""}
+    this.state = {"sessionID": ID(), "messages": [], "current_message":"", "ID" : this.props.domElement.getAttribute('userid'), "NAME":this.props.domElement.getAttribute('name')}
     this.handleClick = this.handleClick.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.onChange = this.onChange.bind(this);
     this.addMessageBox = this.addMessageBox.bind(this);
   }
-
+  
   addFirstMessage(enter=false){
     let messages = this.state.messages;
     let session = this.state.sessionID;
-
+    
     if(messages.length===0){
       fetch("/api/greeting",{
         crossDomain:true,
@@ -219,6 +219,8 @@ class ChatApp extends Component {
     let messages = this.state.messages;
     let current_message = this.state.current_message;
     let session = this.state.sessionID;
+    let userid = this.state.ID;
+    let name = this.state.NAME;
     // console.log(this.state);
 
     if(current_message && enter){
@@ -231,7 +233,10 @@ class ChatApp extends Component {
         },
         body : JSON.stringify({
           "sessionID": session,
-          "message": current_message})
+          "message": current_message,
+          "userID": userid, 
+          "NAME" : name
+        })
       })
       .then(res => res.json())
       .then(
