@@ -197,7 +197,7 @@
 .bottom_wrapper .message_input_wrapper .message_input {
   border: none;
   height: 100%;
-  width: 97%;
+  width: 90%;
   box-sizing: border-box;
   /* width: calc(100% - 40px); */
   position: absolute;

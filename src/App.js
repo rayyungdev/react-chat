@@ -185,7 +185,7 @@ class ChatApp extends Component {
     this.addMessageBox = this.addMessageBox.bind(this);
   }
   
-  addFirstMessage(enter=false){
+  addFirstMessage(){
     let messages = this.state.messages;
     let session = this.state.sessionID;
     
