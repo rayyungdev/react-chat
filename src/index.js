@@ -10,9 +10,7 @@ const WidgetDivs = document.querySelectorAll('.chat_widget')
 
 WidgetDivs.forEach(Div => {
     ReactDOM.render(
-      <React.StrictMode>
-        <ChatApp domElement = {Div}/>
-      </React.StrictMode>,
+        <ChatApp domElement = {Div}/>,
       Div
     );
   })

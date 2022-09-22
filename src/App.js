@@ -179,7 +179,7 @@ class MessagesContainer extends Component{
 class ChatApp extends Component {
   constructor(props){
     super(props);
-    this.state = {"sessionID": ID(), "messages": [], "current_message":"", "ID" : this.props.domElement.getAttribute('userid'), "NAME":this.props.domElement.getAttribute('name')}
+    this.state = {"sessionID": ID(), "messages": [], "current_message":"", "ID" : this.props.domElement.getAttribute('userid')}
     this.handleClick = this.handleClick.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -199,6 +199,7 @@ class ChatApp extends Component {
         },
         body : JSON.stringify({
           "sessionID": session,
+          "userID" : this.state.ID
         })
       })
       .then(res => res.json())
@@ -220,7 +221,6 @@ class ChatApp extends Component {
     let current_message = this.state.current_message;
     let session = this.state.sessionID;
     let userid = this.state.ID;
-    let name = this.state.NAME;
     // console.log(this.state);
 
     if(current_message && enter){
@@ -235,13 +235,11 @@ class ChatApp extends Component {
           "sessionID": session,
           "message": current_message,
           "userID": userid, 
-          "NAME" : name
         })
       })
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result)
           this.setState({
             messages: [...messages, {"message":result["message"], "isbotmessage":true}]
           });
