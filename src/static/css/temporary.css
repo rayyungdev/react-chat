@@ -6,7 +6,7 @@
 .messages{
     position: relative;
     /* bottom: 0; */
-    height: 85%
+    height: 80%
 }
 
 .messages .message.left .text {

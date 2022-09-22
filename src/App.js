@@ -1,7 +1,6 @@
 import React, { Component} from 'react';
 import './App.css';
 import './static/css/chat_interface.css';
-import './static/css/temporary.css';
 
 var ID = function(){
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -179,7 +178,7 @@ class MessagesContainer extends Component{
 class ChatApp extends Component {
   constructor(props){
     super(props);
-    this.state = {"sessionID": ID(), "messages": [], "current_message":"", "ID" : this.props.domElement.getAttribute('userid')}
+    this.state = {"sessionID": ID(), "messages": [], "current_message":"", "ID" : this.props.domElement.getAttribute('userid'), "NAME": ""}
     this.handleClick = this.handleClick.bind(this);
     this._handleKeyPress = this._handleKeyPress.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -207,7 +206,8 @@ class ChatApp extends Component {
         (result) => {
           // console.log(result)
           this.setState({
-            messages: [...messages, {"message":result["message"], "isbotmessage":true}]
+            messages: [...messages, {"message":result["message"], "isbotmessage":true}],
+            NAME: result["NAME"]
           });
         },
         (error) => {
@@ -280,6 +280,7 @@ class ChatApp extends Component {
   render() {
     return (
       <div className="chat_window">
+        <h2> {this.state.NAME} </h2>
         <MessagesContainer messages={this.state.messages}></MessagesContainer>
         <div className="bottom_wrapper clearfix">
           <MessageTextBoxContainer 
