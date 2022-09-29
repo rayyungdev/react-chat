@@ -25,5 +25,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://34.148.112.183:8080"
+  "proxy": "http://interviewmeplz.com:8080"
 }
