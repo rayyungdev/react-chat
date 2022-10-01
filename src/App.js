@@ -191,7 +191,7 @@ class ChatApp extends Component {
     
     if(messages.length===0){
       // fetch("/api/greeting",{
-      fetch("http://interviewmeplz.com:8080/api/greeting",{
+      fetch("https://interviewmeplz.com:8080/api/greeting",{
         crossDomain:true,
         method : "post",
         headers: { 
@@ -227,7 +227,7 @@ class ChatApp extends Component {
     if(current_message && enter){
       messages = [...messages, {"message":current_message}];
       // fetch("/api/response",{
-      fetch("http://interviewmeplz.com:8080/api/response",{
+      fetch("https://interviewmeplz.com:8080/api/response",{
         crossDomain:true,
         method : "post",
         headers: { 
